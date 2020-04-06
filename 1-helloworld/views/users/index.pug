@@ -1,0 +1,16 @@
+h1 Users
+form(action="/users/search", method="get")
+    input(type="text", name="name", id="nameInput")
+    button Search
+ul
+    each user in users
+        li= user.name
+
+script(type="text/javascript").
+    let name  = document.getElementById('nameInput')
+    name.value = localStorage.getItem('nameInput')
+    name.addEventListener('keypress', function(){
+        setTimeout(function(){ 
+            localStorage.setItem('nameInput', name.value); 
+        }, 300);
+        });
