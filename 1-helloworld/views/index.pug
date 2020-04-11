@@ -1,2 +1,6 @@
-h1 Hello World #{name}
-a(href="/users") User List
+extend ./layouts/common
+
+block content
+    h1 Hello World #{name}
+    a(href="/users") User List
+    img(src="/images/mouse.jpeg", alt="Mouse", width=200, height=200)

@@ -1,0 +1,30 @@
+extend ../layouts/common
+
+block content
+    .container
+        h1 Products
+        div.row
+            each product in products
+                div.md-3(style='padding=15px')
+                    .card(style='padding: 20px;')
+                        img.card-img-top(src=product.image, alt='Picture')
+                        .card-body
+                            h5.card-title=product.name
+                            a.btn.btn-primary(href='#')=product.price
+        br
+        nav(aria-label='Page navigation example')
+            ul.pagination
+                li.page-item
+                a.page-link(href='#', aria-label='Previous')
+                    span(aria-hidden='true') &laquo;
+                    span.sr-only Previous
+                    - let pages = page+3
+                    while (page < pages)
+                        li.page-item
+                        a.page-link(href='?page='+page+'&perPage='+perPage)=page
+                        -- page++
+                    li.page-item
+                    a.page-link(href='#', aria-label='Next')
+                        span(aria-hidden='true') &raquo;
+                        span.sr-only Next
+

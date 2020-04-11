@@ -1,39 +1,33 @@
+require('dotenv').config();
 const express = require('express');
+var bodyParser = require('body-parser')
 const app = express();
 const port = 3000;
+var userRoutes = require('./routers/user.route');
+var productRoutes = require('./routers/product.router');
+var authRoutes = require('./routers/auth.route');
+var cookieParser = require('cookie-parser');
+const db = require('./db');
 
-let users = [
-    {id: 1, name: 'Thinh'},
-    {id: 2, name: 'Hung'},
-    {id: 3, name: 'Tai'},
-    {id: 4, name: 'Thien'},
-]
+const authMiddleWare = require('./middlewares/auth.middleware');
+
+app.use(bodyParser.urlencoded({ extended: false })) // parse application/x-www-form-urlencoded
+app.use(bodyParser.json()) // parse application/json
+app.use(express.static('public'));
+app.use(cookieParser(process.env.SESSION_SECRET));
 
 app.set('view engine', 'pug');
 app.set('views', './views');
 
 app.get('/', function (req, res) {
-    res.render('index',{    // path & object{key: val,...}
+    res.render('index', {    // path & object{key: val,...}
         name: 'AAA',
     });
 });
 
-app.get('/users', function (req, res) {
-    res.render('users/index', {
-        users
-    });
-});
-
-app.get('/users/search', function (req, res) {
-    let name = req.query.name;
-    let foundUSers = users.filter((user) =>{
-        return (user.name.toLowerCase().includes(name.toLowerCase())) ? user : undefined;
-    });
-    res.render('users/index',{
-        users : foundUSers
-    });
-});
-
-
 app.listen(port, () => console.log(`Example app listening on port ${port}`));
+
+app.use('/users', authMiddleWare.requireAuth, userRoutes);
+app.use('/products', productRoutes);
+app.use('/auth', authRoutes);
 
