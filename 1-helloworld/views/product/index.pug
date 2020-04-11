@@ -14,17 +14,20 @@ block content
         br
         nav(aria-label='Page navigation example')
             ul.pagination
-                li.page-item
-                a.page-link(href='#', aria-label='Previous')
-                    span(aria-hidden='true') &laquo;
-                    span.sr-only Previous
-                    - let pages = page+3
-                    while (page < pages)
-                        li.page-item
-                        a.page-link(href='?page='+page+'&perPage='+perPage)=page
-                        -- page++
+                if(page!==1)
                     li.page-item
-                    a.page-link(href='#', aria-label='Next')
+                    a.page-link(href='?page='+(page-1)+'&perPage='+perPage, aria-label='Previous')
+                        span(aria-hidden='true') &laquo;
+                        span.sr-only Previous
+                - let pages = page+3
+                - let currentPage = page
+                while (page < pages)&&(page<=totalPages)
+                    li.page-item.active
+                    a.page-link(href='?page='+page+'&perPage='+perPage)=page
+                    -- page++
+                if(page< totalPages)
+                    li.page-item
+                    a.page-link(href='?page='+(currentPage+1)+'&perPage='+perPage, aria-label='Next')
                         span(aria-hidden='true') &raquo;
                         span.sr-only Next
 

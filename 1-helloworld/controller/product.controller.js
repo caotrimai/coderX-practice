@@ -7,7 +7,7 @@ module.exports = {
         page = (req.query.page) ? parseInt(req.query.page) : page;
         perPage = (req.query.perPage) ? parseInt(req.query.perPage) : perPage;
         let products = db.get('products').value();
-        let totalPages = Math.ceil(products.lenth/perPage);
+        let totalPages = Math.ceil(products.length/perPage);
         res.render('product/index', {
             products : products.slice((page-1)*perPage, page*perPage),
             totalPages,
