@@ -10,7 +10,7 @@ block content
                         img.card-img-top(src=product.image, alt='Picture')
                         .card-body
                             h5.card-title=product.name
-                            a.btn.btn-primary(href='#')=product.price
+                            a.btn.btn-primary(href='/cart/add/' + product.id)= product.price
         br
         nav(aria-label='Page navigation example')
             ul.pagination

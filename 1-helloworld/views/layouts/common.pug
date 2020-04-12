@@ -2,4 +2,30 @@ html
     head
         link(rel="stylesheet", href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css")
     body
+        nav.navbar.navbar-default
+            .container-fluid
+                .navbar-header
+                a.navbar-brand(href='#') CoderX-Practice
+                ul.nav.navbar-nav
+                li
+                    a(href='/products') Product
+                li
+                    if(user)
+                        a(href='#')= user.name
+                    if(!user)
+                        a(href='/auth/login') Login
+                li
+                    a(href='#') Cart
+                    label(id="cartCounting")
+
+                        script(type="text/javascript").
+                            // get cartCouting from cookie
+                            let cartCounting;
+                            document.cookie.split('; ').find(function(item){
+                            if(item.startsWith('cartCounting=')){
+                                cartCounting= item.slice('cartCounting='.length);
+                                document.getElementById('cartCounting').innerHTML= '(' + cartCounting + ')';
+                                return;
+                            }
+                            });
         block content    
