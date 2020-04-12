@@ -9,11 +9,20 @@ block content
         button Search
     a(href="/users/create") 
         button New
-    ul
+    table.table
+        tr
+            th Avatar
+            th Name
+            th Phone
+            th Action
         each user in users
-            li= user.name   
-                a(href="/users/" + user.id) View
-
+            tr
+                td
+                    img(src=user.avatar, alt="avatar", widt='70px', height='60px')
+                td= user.name
+                td=user.phone
+                td
+                    a(href="/users/" + user.id) View
     script(type="text/javascript").
         let name  = document.getElementById('nameInput')
         name.value = localStorage.getItem('nameInput')

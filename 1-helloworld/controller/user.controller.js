@@ -1,4 +1,5 @@
 const shortid = require('shortid');
+const path = require('path');
 
 const db = require('../db');
 
@@ -24,6 +25,7 @@ module.exports = {
     postCreate: (req, res) => {
         let user = req.body;
         user.id = shortid.generate();
+        user.avatar = req.file.path.split(path.sep).slice(1).join('/');
         db.get('users')
             .push(user)
             .write();
